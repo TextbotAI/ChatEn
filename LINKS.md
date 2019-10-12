@@ -12,12 +12,12 @@ GPT-2 models:
 
 Similar works:
 
+    https://medium.com/@ageitgey/deepfaking-the-news-with-nlp-and-transformer-models-5e057ebd697d
+    
   Grover:
 
     https://github.com/rowanz/grover
 
     https://rowanzellers.com/grover/
-
-    https://medium.com/@ageitgey/deepfaking-the-news-with-nlp-and-transformer-models-5e057ebd697d
 
     https://arxiv.org/pdf/1905.12616.pdf
