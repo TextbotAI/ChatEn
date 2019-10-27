@@ -17,13 +17,15 @@ def SimplyControlledGen(model, bpe, texts, length=100, top_k=10, temperature=1.0
     :param words(list(str)): list of words which semantics should be mentioned in the generated text;
     :return: A list of generated texts.
     
-'''
-
+   Example:
     texts = ['Mother cleaned the chair, table and the floor.']
     words = ['table']
-    length=100
-    top_k=10
-    temperature=1.0
+'''
+
+    ListWeight = model.layers[1].get_weights()
+    ListWE = ListWeight[0]
+    ArrayWE = np.asarray(ListWE)
+
     batch_size = len(texts)
     encodes = [bpe.encode(text) for text in texts]
     text_lens = [len(encode) for encode in encodes]
@@ -43,11 +45,20 @@ def SimplyControlledGen(model, bpe, texts, length=100, top_k=10, temperature=1.0
             probs = probs / np.sum(probs)
             
             next_token = np.random.choice(indices, p=probs)
-            for i in indices:
-              if i == encodes_words[0]:
-                next_token = encodes_words[0]
-                encodes_words.remove(encodes_words[0])
+            if(len(encodes_words) > 0):
+                BPE = encodes_words[0]
+                WE = ArrayWE[BPE]
+                WE = WE[0]
+                ArrayWEindices = ArrayWE[indices]
+                ArrayWEindices = np.array(ArrayWEindices)
+                ID = Algebra.EuclidianMax(ArrayWEindices, WE)
+                LD = Algebra.Euclidian([ArrayWEindices[ID]], WE)
+                if (LD[0] < (1.7)):
+                  next_token = ID
+                  print(shift)
+                  encodes_words.remove(encodes_words[0])
             input_data[index].append(0)
             input_data[index][text_lens[index] + shift] = next_token
     outputs = [bpe.decode(input_data[index][:text_lens[index] + length]) for index in range(batch_size)]
+
     return outputs
