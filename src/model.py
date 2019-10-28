@@ -18,4 +18,4 @@ def GetCentroidArrayWE(ArrayWE, index2D):
       kmeans = KMeans(n_clusters=1, random_state=0).fit(CurrentArrayWE)
       CentroidWE = kmeans.cluster_centers_
       CentroidArrayWE.append(CentroidWE[0])
-  return CentroidArrayWE
+  return np.array(CentroidArrayWE)
