@@ -4,6 +4,9 @@ from sklearn.cluster import KMeans
 #from sklearn.cluster import MiniBatchKMeans
 
 def GetCentroidArrayWE(ArrayWE, index2D):
+  '''If some word consists of several tokens we get its' centroid.
+  
+  '''
   CentroidArrayWE = []
   for i in range(len(index2D)):
     CurrentArrayWE = []
