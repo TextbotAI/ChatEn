@@ -81,26 +81,27 @@ class BytePairEncoding(object):
             indices += [self.token_dict[token] for token in self.get_bpe(chars)]
         return indices
         
-    def encode2D(self, text):
-        indices2D = []
-        for token in re.findall(self.token_pattern, text):
-            token = bytearray(token.encode('utf-8'))
-            chars = ''.join(self.byte_encoder[code] for code in token)
-            indices1D = [self.token_dict[token] for token in self.get_bpe(chars)]
-            indices2D.append(indices1D)
-        index2D = []    
-        for i in range(len(indices2D)):
-            index1D = []
-            for j in range(len(indices2D[i])):
-                index1D.append(a)
-                a = a + 1
-        index2D.append(index1D)
-        return indiced2D, index2D
+    
 
     def decode(self, tokens):
         text = ''.join([self.token_dict_inv[token] for token in tokens])
         return bytearray([self.byte_decoder[byte] for byte in text]).decode('utf-8', errors='replace')
 
+def encode2D(bpe, text):
+    indices2D = []
+    for token in re.findall(bpe.token_pattern, text):
+        token = bytearray(token.encode('utf-8'))
+        chars = ''.join(bpe.byte_encoder[code] for code in token)
+        indices1D = [bpe.token_dict[token] for token in bpe.get_bpe(chars)]
+        indices2D.append(indices1D)
+    index2D = []    
+    for i in range(len(indices2D)):
+        index1D = []
+        for j in range(len(indices2D[i])):
+            index1D.append(a)
+            a = a + 1
+        index2D.append(index1D)
+    return indiced2D, index2D
 
 def get_bpe_from_files(encoder_path, vocab_path):
     """Get initialized BPE.
